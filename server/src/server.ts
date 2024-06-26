@@ -8,7 +8,7 @@ const app = express();
 const server = http.createServer(app);
 const wss = new WebSocketServer({ server });
 
-// Use CORS middleware
+
 app.use(cors());
 
 let activeUsers = 0;
@@ -16,7 +16,7 @@ const waitingClients: WebSocket[] = [];
 const activePairs = new Map<WebSocket, WebSocket>();
 
 wss.on('connection', (ws: WebSocket) => {
-  activeUsers += 1; // Increment active users count
+  activeUsers += 1; 
   console.log('client connected',activeUsers);
   ws.on('message', (message: string) => {
     const data = JSON.parse(message);
@@ -41,9 +41,9 @@ wss.on('connection', (ws: WebSocket) => {
       const partner: WebSocket | undefined = activePairs.get(ws);
       if (partner) {
         partner.send(JSON.stringify({ type: 'callEnded' }));
-        cleanUpClient(partner);  // Clean up partner's resources
+        cleanUpClient(partner);  
       }
-      cleanUpClient(ws);  // Clean up client's resources
+      cleanUpClient(ws);  
     }
   });
 
@@ -53,7 +53,7 @@ wss.on('connection', (ws: WebSocket) => {
     if (index !== -1) {
       waitingClients.splice(index, 1);
     }
-    //Decrement active users count
+    
     activeUsers -= 1;
     console.log('Client disconnected');
   });
