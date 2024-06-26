@@ -1,6 +1,19 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Deployment and Local Setup
 
-## Getting Started
+Deployment Link: [Wavetalks on Vercel](https://wavetalks.vercel.app/)
+Socket Server: [Wavetalks Socket Server](https://wavetalks-server.onrender.com/)
+Docker Image: [devdhanunjay/wavetalks](https://hub.docker.com/r/devdhanunjay/wavetalks)
+
+## Getting Started with docker image locally 
+
+Pull the Docker image:   docker pull devdhanunjay/wavetalks
+Run the Docker container: docker run -p 3000:3000 -p 3003:3003 devdhanunjay/wavetalks
+Make sure ports 3000 and 3003 are available on your machine.
+Open your web browser and go to http://localhost:3000 to view the application.
+
+
+## Getting Started 
 
 First, run the development server:
 
