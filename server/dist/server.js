@@ -11,13 +11,12 @@ const PORT = process.env.PORT || 3003;
 const app = (0, express_1.default)();
 const server = http_1.default.createServer(app);
 const wss = new ws_1.WebSocketServer({ server });
-// Use CORS middleware
 app.use(cors());
 let activeUsers = 0;
 const waitingClients = [];
 const activePairs = new Map();
 wss.on('connection', (ws) => {
-    activeUsers += 1; // Increment active users count
+    activeUsers += 1;
     console.log('client connected', activeUsers);
     ws.on('message', (message) => {
         const data = JSON.parse(message);
@@ -44,9 +43,9 @@ wss.on('connection', (ws) => {
             const partner = activePairs.get(ws);
             if (partner) {
                 partner.send(JSON.stringify({ type: 'callEnded' }));
-                cleanUpClient(partner); // Clean up partner's resources
+                cleanUpClient(partner);
             }
-            cleanUpClient(ws); // Clean up client's resources
+            cleanUpClient(ws);
         }
     });
     ws.on('close', () => {
@@ -55,7 +54,6 @@ wss.on('connection', (ws) => {
         if (index !== -1) {
             waitingClients.splice(index, 1);
         }
-        //Decrement active users count
         activeUsers -= 1;
         console.log('Client disconnected');
     });
