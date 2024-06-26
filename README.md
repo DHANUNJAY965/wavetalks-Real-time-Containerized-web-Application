@@ -1,9 +1,9 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 Deployment and Local Setup
 
-Deployment Link: [Wavetalks on Vercel](https://wavetalks.vercel.app/)
-Socket Server: [Wavetalks Socket Server](https://wavetalks-server.onrender.com/)
-Docker Image: [devdhanunjay/wavetalks](https://hub.docker.com/r/devdhanunjay/wavetalks)
+- **Deployment Link:** [Wavetalks on Vercel](https://wavetalks.vercel.app/)
+- **Socket Server:** [Wavetalks Socket Server](https://wavetalks-server.onrender.com/)
+- **Docker Image:** [devdhanunjay/wavetalks](https://hub.docker.com/r/devdhanunjay/wavetalks)
 
 ## Getting Started with docker image locally 
 
