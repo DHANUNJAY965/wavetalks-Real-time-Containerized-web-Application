@@ -7,10 +7,10 @@ Deployment and Local Setup
 
 ## Getting Started with docker image locally 
 
-Pull the Docker image:   docker pull devdhanunjay/wavetalks
-Run the Docker container: docker run -p 3000:3000 -p 3003:3003 devdhanunjay/wavetalks
-Make sure ports 3000 and 3003 are available on your machine.
-Open your web browser and go to http://localhost:3000 to view the application.
+1.Pull the Docker image:   docker pull devdhanunjay/wavetalks
+2.Run the Docker container: docker run -p 3000:3000 -p 3003:3003 devdhanunjay/wavetalks
+3.Make sure ports 3000 and 3003 are available on your machine.
+4.Open your web browser and go to http://localhost:3000 to view the application.
 
 
 ## Getting Started 
