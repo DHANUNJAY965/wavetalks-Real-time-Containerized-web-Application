@@ -5,3 +5,4 @@ node server/dist/server.js &
 
 # Start the frontend
 npm run dev
+ 

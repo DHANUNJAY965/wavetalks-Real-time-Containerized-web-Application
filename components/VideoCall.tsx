@@ -29,7 +29,7 @@ const VideoCall: React.FC<VideoCallProps> = ({ onEndCall }) => {
   const [isConnecting, setIsConnecting] = useState(false); // State to indicate if connecting to partner
   const [isConnected, setIsConnected] = useState(false); // State to indicate if connected to partner
 
-  const currentUser = "me"; // Assuming "me" represents the current user. This can be dynamic based on your application.
+  const currentUser = "me"; 
 
   useEffect(() => {
     
@@ -306,7 +306,6 @@ const VideoCall: React.FC<VideoCallProps> = ({ onEndCall }) => {
           </div>
           <div className="absolute bottom-0 left-0 right-0 p-2 flex space-x-2 bg-gray-800">
             {" "}
-            {/* Adjusted p-2 and space-x-2 */}
             <input
               type="text"
               value={chatInput}

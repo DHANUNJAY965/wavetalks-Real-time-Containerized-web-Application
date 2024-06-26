@@ -32,7 +32,7 @@ const Header: React.FC = () => {
 
     fetchActiveUsers();
 
-    const intervalId = setInterval(fetchActiveUsers, 5000); // Polling every 5 seconds
+    const intervalId = setInterval(fetchActiveUsers, 5000); 
 
     return () => clearInterval(intervalId);
   }, []);
