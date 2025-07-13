@@ -92,7 +92,7 @@ const SupportWaveTalks: React.FC = () => {
                   <div>
                     <h3 className="text-white font-bold text-lg mb-2">Part of the Journey</h3>
                     <p className="text-gray-300">
-                      Thank you for being an essential part of the WaveTalks journey! Together, we're building something amazing.
+                      Thank you for being an essential part of the WaveTalks journey! Together, we&apos;re building something amazing.
                     </p>
                   </div>
                 </div>

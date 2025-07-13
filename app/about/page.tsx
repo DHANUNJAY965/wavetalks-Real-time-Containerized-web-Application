@@ -23,13 +23,16 @@ const AboutUs: React.FC = () => {
               Talks
             </span>
           </h1>
-          
+
           <div className="max-w-4xl mx-auto bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20 shadow-2xl">
             <p className="text-xl md:text-2xl text-gray-300 leading-relaxed">
-              Dream of finding new friends? Need someone to talk to? Want to share your highs and lows with a complete stranger?
+              Dream of finding new friends? Need someone to talk to? Want to
+              share your highs and lows with a complete stranger?
             </p>
             <p className="text-lg md:text-xl text-gray-400 mt-4 leading-relaxed">
-              Welcome to WaveTalks, an innovative platform designed to connect you with people from all around the world through instant messaging, audio, and video calls.
+              Welcome to WaveTalks, an innovative platform designed to connect
+              you with people from all around the world through instant
+              messaging, audio, and video calls.
             </p>
           </div>
         </div>
@@ -42,45 +45,60 @@ const AboutUs: React.FC = () => {
               WaveTalks?
             </span>
           </h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             <div className="bg-white/5 backdrop-blur-md rounded-xl p-6 border border-white/10 hover:border-purple-500/50 transition-all duration-300 hover:transform hover:scale-105">
               <div className="text-4xl mb-4">🎯</div>
-              <h3 className="text-white font-bold text-xl mb-3">Seamless Communication</h3>
+              <h3 className="text-white font-bold text-xl mb-3">
+                Seamless Communication
+              </h3>
               <p className="text-gray-400">
-                Engage in crystal-clear audio and video calls, along with instant messaging, ensuring a smooth and enjoyable experience.
+                Engage in crystal-clear audio and video calls, along with
+                instant messaging, ensuring a smooth and enjoyable experience.
               </p>
             </div>
-            
+
             <div className="bg-white/5 backdrop-blur-md rounded-xl p-6 border border-white/10 hover:border-cyan-500/50 transition-all duration-300 hover:transform hover:scale-105">
               <div className="text-4xl mb-4">⚡</div>
-              <h3 className="text-white font-bold text-xl mb-3">Instant Connections</h3>
+              <h3 className="text-white font-bold text-xl mb-3">
+                Instant Connections
+              </h3>
               <p className="text-gray-400">
-                Connect with strangers from all over the world instantly. No need for complicated setups or downloads.
+                Connect with strangers from all over the world instantly. No
+                need for complicated setups or downloads.
               </p>
             </div>
-            
+
             <div className="bg-white/5 backdrop-blur-md rounded-xl p-6 border border-white/10 hover:border-pink-500/50 transition-all duration-300 hover:transform hover:scale-105">
               <div className="text-4xl mb-4">🎨</div>
-              <h3 className="text-white font-bold text-xl mb-3">User-Friendly Interface</h3>
+              <h3 className="text-white font-bold text-xl mb-3">
+                User-Friendly Interface
+              </h3>
               <p className="text-gray-400">
-                Our intuitive design ensures that you can navigate and enjoy all features effortlessly, regardless of your technical skills.
+                Our intuitive design ensures that you can navigate and enjoy all
+                features effortlessly, regardless of your technical skills.
               </p>
             </div>
-            
+
             <div className="bg-white/5 backdrop-blur-md rounded-xl p-6 border border-white/10 hover:border-green-500/50 transition-all duration-300 hover:transform hover:scale-105">
               <div className="text-4xl mb-4">🔒</div>
-              <h3 className="text-white font-bold text-xl mb-3">Privacy and Security</h3>
+              <h3 className="text-white font-bold text-xl mb-3">
+                Privacy and Security
+              </h3>
               <p className="text-gray-400">
-                All conversations are end-to-end encrypted, ensuring your privacy and security at all times.
+                All conversations are end-to-end encrypted, ensuring your
+                privacy and security at all times.
               </p>
             </div>
-            
+
             <div className="bg-white/5 backdrop-blur-md rounded-xl p-6 border border-white/10 hover:border-yellow-500/50 transition-all duration-300 hover:transform hover:scale-105">
               <div className="text-4xl mb-4">🚀</div>
-              <h3 className="text-white font-bold text-xl mb-3">No Registration Required</h3>
+              <h3 className="text-white font-bold text-xl mb-3">
+                No Registration Required
+              </h3>
               <p className="text-gray-400">
-                Start chatting right away without the need for sign-ups or personal information.
+                Start chatting right away without the need for sign-ups or
+                personal information.
               </p>
             </div>
           </div>
@@ -95,13 +113,16 @@ const AboutUs: React.FC = () => {
                 WaveTalks Community
               </span>
             </h2>
-            
+
             <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20 shadow-2xl">
               <p className="text-xl md:text-2xl text-gray-300 leading-relaxed mb-6">
-                WaveTalks is more than just a communication platform; it's a community where you can share experiences, exchange ideas, and build meaningful connections with strangers.
+                WaveTalks is more than just a communication platform; it&apos;s
+                a community where you can share experiences, exchange ideas, and
+                build meaningful connections with strangers.
               </p>
               <p className="text-lg md:text-xl text-gray-400 leading-relaxed">
-                Join hundreds of people every day and start conversations that could lead to lasting friendships.
+                Join hundreds of people every day and start conversations that
+                could lead to lasting friendships.
               </p>
             </div>
           </div>
@@ -114,12 +135,13 @@ const AboutUs: React.FC = () => {
               Support Us
             </span>
           </h2>
-          
+
           <div className="max-w-3xl mx-auto bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20 shadow-2xl">
             <p className="text-xl md:text-2xl text-gray-300 leading-relaxed mb-8">
-              Your support helps us improve and maintain the platform. Click the button below to buy us a coffee and show your support!
+              Your support helps us improve and maintain the platform. Click the
+              button below to buy us a coffee and show your support!
             </p>
-            
+
             <div className="relative group inline-block">
               <div className="absolute -inset-1 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-2xl blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse"></div>
               <button className="relative bg-gradient-to-r from-yellow-500 to-orange-500 text-white py-4 px-12 rounded-2xl font-bold text-lg hover:from-yellow-600 hover:to-orange-600 transition-all duration-300 transform hover:scale-105 shadow-2xl">

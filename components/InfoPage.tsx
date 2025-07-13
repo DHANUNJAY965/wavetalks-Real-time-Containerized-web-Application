@@ -54,7 +54,7 @@ const AboutUs: React.FC = () => {
                 Global Connections
               </h3>
               <p className="text-gray-300">
-                At WaveTalks, we've reimagined online interactions, focusing on
+                At WaveTalks, we&apos;ve reimagined online interactions, focusing on
                 the magic of audio/video connections. Connect with people from
                 every corner of the world.
               </p>
@@ -69,7 +69,7 @@ const AboutUs: React.FC = () => {
               </h3>
               <p className="text-gray-300">
                 We provide a seamless and user-friendly platform for anonymous
-                voice and video chats. Whether you're seeking language exchange
+                voice and video chats. Whether you&apos;re seeking language exchange
                 partners or new friendships.
               </p>
             </div>
@@ -85,7 +85,7 @@ const AboutUs: React.FC = () => {
             <p className="text-gray-300">
               WaveTalks is designed for those who value privacy and meaningful
               interactions. With audio/video involved, you can be yourself and
-              connect on a deeper level. It's a space where you can practice
+              connect on a deeper level. It&apos;s a space where you can practice
               languages, explore diverse cultures, or just have a great time
               chatting with fellow global citizens.
             </p>
@@ -100,7 +100,7 @@ const AboutUs: React.FC = () => {
               today and rediscover the joy of spontaneous conversations.
             </p>
             <p className="text-cyan-400 text-xl font-bold mt-2">
-              It's more than just a chat – it's an experience. ✨
+              It&apos;s more than just a chat – it&apos;s an experience. ✨
             </p>
           </div>
         </div>
