@@ -37,19 +37,23 @@ const SupportWaveTalks: React.FC = () => {
         {/* Support message */}
         <div className="bg-white/5 backdrop-blur-md rounded-3xl p-8 md:p-12 border border-white/10 shadow-2xl">
           <div className="space-y-6 text-gray-300 leading-relaxed">
-            <p className="text-xl md:text-2xl font-medium">
+            <p className="text-xl md:text-2xl font-medium flex items-center justify-center gap-3">
               Dear{" "}
               <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent font-bold">
                 WaveTalks Community
               </span>
-              , 👋
+              <svg className="w-8 h-8 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+              </svg>
             </p>
             
             <div className="grid md:grid-cols-2 gap-8 text-left">
               <div className="space-y-4">
                 <div className="flex items-start space-x-3">
                   <div className="w-8 h-8 bg-gradient-to-r from-red-500 to-pink-500 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <span className="text-sm">❤️</span>
+                    <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                    </svg>
                   </div>
                   <div>
                     <h3 className="text-white font-bold text-lg mb-2">Your Support is Our Lifeblood</h3>
@@ -61,7 +65,9 @@ const SupportWaveTalks: React.FC = () => {
                 
                 <div className="flex items-start space-x-3">
                   <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <span className="text-sm">🚀</span>
+                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
                   </div>
                   <div>
                     <h3 className="text-white font-bold text-lg mb-2">New Features & Growth</h3>
@@ -75,7 +81,9 @@ const SupportWaveTalks: React.FC = () => {
               <div className="space-y-4">
                 <div className="flex items-start space-x-3">
                   <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <span className="text-sm">🙏</span>
+                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
                   </div>
                   <div>
                     <h3 className="text-white font-bold text-lg mb-2">Deep Appreciation</h3>
@@ -87,7 +95,9 @@ const SupportWaveTalks: React.FC = () => {
                 
                 <div className="flex items-start space-x-3">
                   <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-violet-500 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <span className="text-sm">✨</span>
+                    <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                    </svg>
                   </div>
                   <div>
                     <h3 className="text-white font-bold text-lg mb-2">Part of the Journey</h3>
@@ -102,7 +112,7 @@ const SupportWaveTalks: React.FC = () => {
         </div>
 
         {/* CTA Button */}
-        <div className="flex flex-col items-center space-y-6">
+          <div className="flex flex-col items-center space-y-6">
           <div className="relative group">
             <div className="absolute -inset-2 bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500 rounded-2xl blur opacity-60 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse"></div>
             <a

@@ -84,7 +84,7 @@ const Home: React.FC = () => {
             {/* Instruction text with animation */}
             <div className="mt-8 p-6 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl">
               <p className="text-lg md:text-xl text-gray-300 font-medium">
-                🎯 Click the button above to connect with a stranger instantly
+                Click the button above to connect with a stranger instantly
               </p>
             </div>
 
