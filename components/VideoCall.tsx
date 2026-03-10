@@ -277,20 +277,13 @@ const VideoCall: React.FC<VideoCallProps> = ({ onEndCall }) => {
 
   return (
     <>
-      <div className="min-h-screen w-full bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
-        {/* Animated background elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
-          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-cyan-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse animation-delay-2000"></div>
-          <div className="absolute top-40 left-40 w-60 h-60 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse animation-delay-4000"></div>
-        </div>
-
-        <div className="relative z-10 flex items-center justify-center min-h-screen p-2 sm:p-4">
-          <div className="w-full max-w-6xl mx-auto">
-            <div className="bg-white/5 backdrop-blur-md rounded-3xl border border-white/10 shadow-2xl overflow-hidden">
-              <div className="flex flex-col lg:flex-row h-[100vh] lg:h-[500px]">
+      <div className="min-h-[calc(100vh-80px)] w-full relative bg-muted/20">
+        <div className="relative z-10 flex items-center justify-center p-4 lg:p-8 h-full">
+          <div className="w-full max-w-7xl mx-auto">
+            <div className="bg-card text-card-foreground rounded-xl border shadow-sm overflow-hidden h-[85vh]">
+              <div className="flex flex-col lg:flex-row h-full">
                 {/* Video Section */}
-                <div className="relative flex-1 bg-gray-900/50 backdrop-blur-sm h-[70vh] lg:h-full">
+                <div className="relative flex-1 bg-zinc-950 flex flex-col items-center justify-center border-r border-border">
                   <video
                     ref={remoteVideoRef}
                     autoPlay
@@ -300,36 +293,36 @@ const VideoCall: React.FC<VideoCallProps> = ({ onEndCall }) => {
 
                   {/* Connection Status Overlay */}
                   {localVideoRef.current == null ? (
-                    <div className="absolute inset-0 flex items-center justify-center bg-gray-900/75 backdrop-blur-sm">
+                    <div className="absolute inset-0 flex items-center justify-center bg-zinc-950/80 backdrop-blur-sm z-30">
                       <div className="text-center px-4">
                         <div className="mb-4">
-                          <div className="w-16 h-16 border-4 border-purple-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+                          <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto"></div>
                         </div>
                         <p className="text-white text-base sm:text-lg font-medium">
                           Please wait a moment while we connect you.
                         </p>
-                        <p className="text-gray-400 mt-2 text-sm sm:text-base">The server is waking up...</p>
+                        <p className="text-zinc-400 mt-2 text-sm">The server is waking up...</p>
                       </div>
                     </div>
                   ) : (
                     isConnecting &&
                     !isConnected && (
-                      <div className="absolute inset-0 flex items-center justify-center bg-gray-900/75 backdrop-blur-sm">
+                      <div className="absolute inset-0 flex items-center justify-center bg-zinc-950/80 backdrop-blur-sm z-30">
                         <div className="text-center px-4">
                           <div className="mb-4">
-                            <div className="w-16 h-16 border-4 border-purple-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+                            <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto"></div>
                           </div>
                           <p className="text-white text-base sm:text-lg font-medium">
                             Searching for a partner to connect you with...
                           </p>
-                          <p className="text-gray-400 mt-2 text-sm sm:text-base">Please wait</p>
+                          <p className="text-zinc-400 mt-2 text-sm">Please wait</p>
                         </div>
                       </div>
                     )
                   )}
 
                   {/* Local Video (Picture-in-Picture) */}
-                  <div className="absolute bottom-16 sm:bottom-4 right-4 w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 bg-gray-800 rounded-xl overflow-hidden border-2 border-white/20 shadow-lg">
+                  <div className="absolute bottom-6 right-6 w-32 h-44 sm:w-40 sm:h-56 bg-zinc-900 rounded-lg overflow-hidden border border-zinc-800 shadow-xl z-20">
                     <video
                       ref={localVideoRef}
                       autoPlay
@@ -338,21 +331,21 @@ const VideoCall: React.FC<VideoCallProps> = ({ onEndCall }) => {
                       className="w-full h-full object-cover"
                     />
                     {!isVideoOn && (
-                      <div className="absolute inset-0 bg-gray-800 flex items-center justify-center">
-                        <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gray-600 rounded-full flex items-center justify-center">
-                          <span className="text-white text-xs">👤</span>
+                      <div className="absolute inset-0 bg-zinc-900 flex items-center justify-center">
+                        <div className="w-12 h-12 bg-zinc-800 rounded-full flex items-center justify-center">
+                          <span className="text-white text-lg">👤</span>
                         </div>
                       </div>
                     )}
                   </div>
 
                   {/* Control Buttons */}
-                  <div className="absolute bottom-16 sm:bottom-4 left-4 flex space-x-2 sm:space-x-3">
+                  <div className="absolute bottom-16 sm:bottom-4 left-4 flex space-x-2 sm:space-x-3 z-40">
                     <button
                       onClick={toggleMute}
-                      className={`p-2 sm:p-3 rounded-full backdrop-blur-md border border-white/20 transition-all duration-300 hover:scale-105 ${isMuted
-                        ? 'bg-red-500/20 border-red-500/50 text-red-400'
-                        : 'bg-white/10 text-white hover:bg-white/20'
+                      className={`p-2 sm:p-3 rounded-full transition-all duration-300 hover:scale-105 shadow-md ${isMuted
+                        ? 'bg-destructive border-transparent text-destructive-foreground hover:bg-destructive/90'
+                        : 'bg-zinc-800 border border-zinc-700 text-zinc-100 hover:bg-zinc-700'
                         }`}
                       aria-label="Toggle Mute"
                     >
@@ -361,9 +354,9 @@ const VideoCall: React.FC<VideoCallProps> = ({ onEndCall }) => {
 
                     <button
                       onClick={toggleVideo}
-                      className={`p-2 sm:p-3 rounded-full backdrop-blur-md border border-white/20 transition-all duration-300 hover:scale-105 ${!isVideoOn
-                        ? 'bg-red-500/20 border-red-500/50 text-red-400'
-                        : 'bg-white/10 text-white hover:bg-white/20'
+                      className={`p-2 sm:p-3 rounded-full transition-all duration-300 hover:scale-105 shadow-md ${!isVideoOn
+                        ? 'bg-destructive border-transparent text-destructive-foreground hover:bg-destructive/90'
+                        : 'bg-zinc-800 border border-zinc-700 text-zinc-100 hover:bg-zinc-700'
                         }`}
                       aria-label="Toggle Video"
                     >
@@ -376,26 +369,26 @@ const VideoCall: React.FC<VideoCallProps> = ({ onEndCall }) => {
 
                     <button
                       onClick={() => {
-                        setToastMessage("The call has been ended !");
+                        setToastMessage("The call has been ended.");
                         setShowToast(true);
                         setTimeout(() => {
                           setShowToast(false);
                           endCall();
                         }, 2000);
                       }}
-                      className="p-2 sm:p-3 rounded-full bg-red-500/20 border border-red-500/50 text-red-400 backdrop-blur-md transition-all duration-300 hover:scale-105 hover:bg-red-500/30"
+                      className="p-3 rounded-full bg-red-600 text-white hover:bg-red-700 transition-all shadow-md hover:scale-105"
                       aria-label="End Call"
                     >
-                      <PhoneMissedCallIcon className="w-5 h-5 sm:w-6 sm:h-6" />
+                      <PhoneMissedCallIcon className="w-6 h-6" />
                     </button>
 
                     {/* Chat Toggle Button for Mobile */}
                     <button
                       onClick={() => setShowChat(!showChat)}
-                      className="lg:hidden p-2 sm:p-3 rounded-full bg-white/10 border border-white/20 text-white backdrop-blur-md transition-all duration-300 hover:scale-105 hover:bg-white/20"
+                      className="lg:hidden p-3 rounded-full bg-zinc-800 text-white hover:bg-zinc-700 transition-colors"
                       aria-label="Toggle Chat"
                     >
-                      <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                       </svg>
                     </button>
@@ -403,13 +396,13 @@ const VideoCall: React.FC<VideoCallProps> = ({ onEndCall }) => {
                 </div>
 
                 {/* Chat Section */}
-                <div className={`w-full lg:w-96 bg-gray-900/30 backdrop-blur-sm flex flex-col border-l border-white/10 h-[30vh] lg:h-full
+                <div className={`w-full lg:w-96 bg-card flex flex-col h-[30vh] lg:h-full
                   ${showChat ? 'block' : 'hidden'} lg:flex`}>
-                  <div className="p-3 sm:p-4 border-b border-white/10 flex items-center justify-between">
-                    <h3 className="text-white font-semibold text-base sm:text-lg">Chat</h3>
+                  <div className="p-4 border-b border-border flex items-center justify-between bg-muted/30">
+                    <h3 className="font-semibold text-lg">In-Call Messages</h3>
                     <button
                       onClick={() => setShowChat(false)}
-                      className="lg:hidden text-gray-400 hover:text-white transition-colors"
+                      className="lg:hidden text-muted-foreground hover:text-foreground transition-colors"
                     >
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -417,46 +410,31 @@ const VideoCall: React.FC<VideoCallProps> = ({ onEndCall }) => {
                     </button>
                   </div>
 
-                  <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-2 sm:space-y-3 min-h-0">
-                    {localVideoRef.current == null ? (
-                      <div className="text-center text-gray-400 py-4 sm:py-8">
-                        <div className="mb-2 sm:mb-4">
-                          <div className="w-8 h-8 sm:w-12 sm:h-12 border-4 border-purple-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
-                        </div>
-                        <p className="text-sm sm:text-base">Please wait a moment while we connect you.</p>
-                        <p className="text-xs sm:text-sm mt-1 sm:mt-2">The server is waking up...</p>
+                  <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0 bg-card">
+                    {localVideoRef.current == null || (isConnecting && !isConnected) ? (
+                      <div className="text-center text-muted-foreground py-8">
+                        <p className="text-sm">Chat will be available once connected.</p>
                       </div>
-                    ) : (
-                      isConnecting &&
-                      !isConnected && (
-                        <div className="text-center text-gray-400 py-4 sm:py-8">
-                          <div className="mb-2 sm:mb-4">
-                            <div className="w-8 h-8 sm:w-12 sm:h-12 border-4 border-purple-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
-                          </div>
-                          <p className="text-sm sm:text-base">Searching for a partner to connect you with...</p>
-                          <p className="text-xs sm:text-sm mt-1 sm:mt-2">Please wait</p>
-                        </div>
-                      )
-                    )}
+                    ) : null}
 
                     {messages.map((msg, index) => (
                       <div
                         key={index}
-                        className={`max-w-xs break-words ${msg.sender === currentUser ? 'ml-auto' : 'mr-auto'
+                        className={`max-w-[85%] break-words ${msg.sender === currentUser ? 'ml-auto' : 'mr-auto'
                           }`}
                       >
                         <div
-                          className={`p-2 sm:p-3 rounded-2xl ${msg.sender === currentUser
-                            ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white'
-                            : 'bg-white/10 text-gray-300 backdrop-blur-md'
+                          className={`p-3 rounded-2xl ${msg.sender === currentUser
+                            ? 'bg-primary text-primary-foreground rounded-br-sm'
+                            : 'bg-muted text-foreground rounded-bl-sm border border-border'
                             }`}
                         >
-                          {msg.text && <p className="text-xs sm:text-sm">{msg.text}</p>}
+                          {msg.text && <p className="text-sm leading-relaxed">{msg.text}</p>}
                           {msg.image && (
                             <img
                               src={msg.image}
                               alt="Sent image"
-                              className="max-w-full h-auto rounded-lg"
+                              className="max-w-full h-auto rounded-lg mt-1"
                             />
                           )}
                         </div>
@@ -464,28 +442,28 @@ const VideoCall: React.FC<VideoCallProps> = ({ onEndCall }) => {
                     ))}
                   </div>
 
-                  <div className="p-3 sm:p-4 border-t border-white/10">
+                  <div className="p-4 border-t border-border bg-card">
                     <div className="flex space-x-2">
                       <input
                         type="text"
                         value={chatInput}
                         onChange={(e) => setChatInput(e.target.value)}
                         onKeyDown={handleKeyDown}
-                        className="flex-1 bg-white/10 backdrop-blur-md text-white placeholder-gray-400 px-3 sm:px-4 py-2 rounded-xl border border-white/20 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm sm:text-base"
+                        className="flex-1 bg-background text-foreground px-4 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent text-sm"
                         placeholder="Type a message..."
                       />
                       <button
                         onClick={handleSendMessage}
-                        className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-3 sm:px-4 py-2 rounded-xl font-medium hover:from-purple-600 hover:to-pink-600 transition-all duration-300 transform hover:scale-105 text-sm sm:text-base"
+                        className="bg-primary text-primary-foreground px-4 py-2 rounded-md font-medium hover:bg-primary/90 transition-colors text-sm"
                       >
                         Send
                       </button>
                     </div>
 
-                    <div className="mt-2">
-                      <label className="inline-flex items-center space-x-2 text-gray-400 hover:text-white cursor-pointer transition-colors">
-                        <PaperClipIcon className="w-4 h-4 sm:w-5 sm:h-5" />
-                        <span className="text-xs sm:text-sm">Share Image</span>
+                    <div className="mt-3">
+                      <label className="inline-flex items-center space-x-2 text-muted-foreground hover:text-foreground cursor-pointer transition-colors text-sm font-medium">
+                        <PaperClipIcon className="w-5 h-5" />
+                        <span>Share Image</span>
                         <input
                           type="file"
                           onChange={handleFileChange}
@@ -503,28 +481,30 @@ const VideoCall: React.FC<VideoCallProps> = ({ onEndCall }) => {
       </div>
 
       {/* Toast Notification */}
-      {showToast && (
-        <div className="fixed top-4 right-4 z-50">
-          <div className="bg-white/10 backdrop-blur-md rounded-xl border border-white/20 p-4 shadow-2xl">
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
+      {
+        showToast && (
+          <div className="fixed top-4 right-4 z-50">
+            <div className="bg-card text-card-foreground rounded-lg border shadow-lg p-4">
+              <div className="flex items-center space-x-3">
+                <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <span className="font-medium">{Toast}</span>
+                <button
+                  onClick={() => setShowToast(false)}
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
               </div>
-              <span className="text-white font-medium">{Toast}</span>
-              <button
-                onClick={() => setShowToast(false)}
-                className="text-gray-400 hover:text-white transition-colors"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
             </div>
           </div>
-        </div>
-      )}
+        )
+      }
     </>
   );
 };
