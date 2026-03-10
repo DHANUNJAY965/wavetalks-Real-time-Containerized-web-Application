@@ -2,13 +2,13 @@ import express from 'express';
 import http from 'http';
 import WebSocket, { WebSocketServer } from 'ws';
 const cors = require("cors");
-const PORT=process.env.PORT || 3003;
+const PORT = process.env.PORT || 3003;
 
 const app = express();
 const server = http.createServer(app);
 const wss = new WebSocketServer({ server });
 
-
+// Use CORS middleware
 app.use(cors());
 
 let activeUsers = 0;
@@ -16,34 +16,39 @@ const waitingClients: WebSocket[] = [];
 const activePairs = new Map<WebSocket, WebSocket>();
 
 wss.on('connection', (ws: WebSocket) => {
-  activeUsers += 1; 
-  console.log('client connected',activeUsers);
+  activeUsers += 1; // Increment active users count
+  console.log('client connected', activeUsers);
   ws.on('message', (message: string) => {
     const data = JSON.parse(message);
 
-    if (data.type === 'offer') {
+    if (data.type === 'ready') {
+      if (activePairs.has(ws) || waitingClients.includes(ws)) return;
+
       if (waitingClients.length > 0) {
-        const partner = waitingClients.pop();
-        if (partner) {
+        const partner = waitingClients.shift();
+        if (partner && partner.readyState === WebSocket.OPEN) {
           activePairs.set(ws, partner);
           activePairs.set(partner, ws);
-          partner.send(JSON.stringify(data));
+          ws.send(JSON.stringify({ type: 'paired', initiator: true }));
+          partner.send(JSON.stringify({ type: 'paired', initiator: false }));
+        } else {
+          waitingClients.push(ws);
         }
       } else {
         waitingClients.push(ws);
       }
-    } else if (data.type === 'answer' || data.type === 'candidate' || data.type === 'chat' || data.type === 'image') {
+    } else if (data.type === 'offer' || data.type === 'answer' || data.type === 'candidate' || data.type === 'chat' || data.type === 'image') {
       const partner = activePairs.get(ws);
-      if (partner) {
+      if (partner && partner.readyState === WebSocket.OPEN) {
         partner.send(JSON.stringify(data));
       }
     } else if (data.type === 'endCall') {
       const partner: WebSocket | undefined = activePairs.get(ws);
       if (partner) {
         partner.send(JSON.stringify({ type: 'callEnded' }));
-        cleanUpClient(partner);  
+        cleanUpClient(partner);  // Clean up partner's resources
       }
-      cleanUpClient(ws);  
+      cleanUpClient(ws);  // Clean up client's resources
     }
   });
 
@@ -53,9 +58,9 @@ wss.on('connection', (ws: WebSocket) => {
     if (index !== -1) {
       waitingClients.splice(index, 1);
     }
-    
-    activeUsers -= 1;
-    console.log('Client disconnected');
+    //Decrement active users count
+    activeUsers = Math.max(0, activeUsers - 1);
+    console.log('Client disconnected', activeUsers);
   });
 });
 
@@ -67,14 +72,14 @@ function cleanUpClient(ws: WebSocket) {
     partner.close();
   }
   activePairs.delete(ws);
-  console.log('Client disconnected',activeUsers);
+  console.log('Client disconnected', activeUsers);
   ws.close();
 }
 
 
 
-app.get('/',(req,res)=>{
-    res.send("<h1>WAVETALKS WEBSOCKET SERVER IS ACTIVE NOW</h");
+app.get('/', (req, res) => {
+  res.send("<h1>WAVETALKS WEBSOCKET SERVER IS ACTIVE NOW</h");
 })
 
 app.get('/activeusers', (req, res) => {

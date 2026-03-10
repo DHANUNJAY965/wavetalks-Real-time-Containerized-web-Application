@@ -9,6 +9,7 @@ import {
 } from "@heroicons/react/solid";
 import VideocamOffIcon from '@mui/icons-material/VideocamOff';
 import { usePathname, useRouter } from 'next/navigation';
+import { SOCKET_URL } from '@/config/baseUrl';
 
 interface VideoCallProps {
   onEndCall: () => void;
@@ -19,6 +20,7 @@ const VideoCall: React.FC<VideoCallProps> = ({ onEndCall }) => {
   const remoteVideoRef = useRef<HTMLVideoElement>(null);
   const pc = useRef<RTCPeerConnection | null>(null);
   const ws = useRef<WebSocket | null>(null);
+  const iceCandidateQueue = useRef<RTCIceCandidate[]>([]);
   const [user, setusers] = useState<number>(0);
   const [isMuted, setIsMuted] = useState(false);
   const [isVideoOn, setIsVideoOn] = useState(true);
@@ -35,6 +37,15 @@ const VideoCall: React.FC<VideoCallProps> = ({ onEndCall }) => {
   const currentPage = usePathname();
   const router = useRouter();
 
+  const flushIceCandidateQueue = () => {
+    while (iceCandidateQueue.current.length > 0) {
+      const candidate = iceCandidateQueue.current.shift();
+      if (candidate && pc.current) {
+        pc.current.addIceCandidate(candidate).catch(e => console.error("Error adding queued ice candidate:", e));
+      }
+    }
+  };
+
   useEffect(() => {
     const checkMediaDevices = async () => {
       const devices = await navigator.mediaDevices.enumerateDevices();
@@ -49,27 +60,49 @@ const VideoCall: React.FC<VideoCallProps> = ({ onEndCall }) => {
       }
     };
     checkMediaDevices();
-    ws.current = new WebSocket("wss://wavetalks-server.onrender.com");
+    ws.current = new WebSocket(SOCKET_URL);
     ws.current.onopen = () => startVideo();
 
     ws.current.onmessage = async (message) => {
       const data = JSON.parse(message.data);
 
-      if (data.type === "offer") {
-        await pc.current?.setRemoteDescription(new RTCSessionDescription(data));
-        const answer: any = await pc.current?.createAnswer();
-        if (answer) {
-          await pc.current?.setLocalDescription(answer);
-          ws.current?.send(JSON.stringify({ type: "answer", sdp: answer.sdp }));
+      if (data.type === "paired") {
+        const initiator = data.initiator;
+        if (initiator) {
+          const offer = await pc.current?.createOffer();
+          if (offer) {
+            await pc.current?.setLocalDescription(offer);
+            ws.current?.send(JSON.stringify({ type: "offer", sdp: offer.sdp }));
+          }
+        }
+      } else if (data.type === "offer") {
+        try {
+          await pc.current?.setRemoteDescription(new RTCSessionDescription(data));
+          flushIceCandidateQueue();
+          const answer: any = await pc.current?.createAnswer();
+          if (answer) {
+            await pc.current?.setLocalDescription(answer);
+            ws.current?.send(JSON.stringify({ type: "answer", sdp: answer.sdp }));
+          }
+        } catch (e) {
+          console.error("Error handling offer:", e);
         }
       } else if (data.type === "answer") {
-        await pc.current?.setRemoteDescription(new RTCSessionDescription(data));
-        setIsConnected(true);
+        try {
+          await pc.current?.setRemoteDescription(new RTCSessionDescription(data));
+          flushIceCandidateQueue();
+          setIsConnected(true);
+        } catch (e) {
+          console.error("Error handling answer:", e);
+        }
       } else if (data.type === "candidate") {
         if (data.candidate) {
-          await pc.current?.addIceCandidate(
-            new RTCIceCandidate(data.candidate)
-          );
+          const rtcIceCandidate = new RTCIceCandidate(data.candidate);
+          if (pc.current && pc.current.remoteDescription) {
+            pc.current.addIceCandidate(rtcIceCandidate).catch(e => console.error("Error adding ice candidate:", e));
+          } else {
+            iceCandidateQueue.current.push(rtcIceCandidate);
+          }
         }
       } else if (data.type === "chat") {
         console.log("Received chat message:", data.message);
@@ -89,7 +122,13 @@ const VideoCall: React.FC<VideoCallProps> = ({ onEndCall }) => {
     };
 
     return () => {
-      ws.current?.close();
+      if (ws.current) {
+        ws.current.close();
+      }
+      if (pc.current) {
+        pc.current.close();
+      }
+      iceCandidateQueue.current = [];
     };
   }, []);
 
@@ -112,7 +151,14 @@ const VideoCall: React.FC<VideoCallProps> = ({ onEndCall }) => {
         console.error('Error accessing media devices:', err);
       }
     }
-    pc.current = new RTCPeerConnection();
+    const configuration = {
+      iceServers: [
+        { urls: 'stun:stun.l.google.com:19302' },
+        { urls: 'stun:stun1.l.google.com:19302' },
+        { urls: 'stun:stun2.l.google.com:19302' }
+      ]
+    };
+    pc.current = new RTCPeerConnection(configuration);
 
     pc.current.onicecandidate = (event) => {
       if (event.candidate) {
@@ -143,9 +189,8 @@ const VideoCall: React.FC<VideoCallProps> = ({ onEndCall }) => {
       pc.current?.addTrack(track, stream);
     });
 
-    const offer = await pc.current.createOffer();
-    await pc.current.setLocalDescription(offer);
-    ws.current?.send(JSON.stringify({ type: "offer", sdp: offer.sdp }));
+    // Notify the signaling server that we are ready to be paired
+    ws.current?.send(JSON.stringify({ type: "ready" }));
 
     setIsConnecting(true);
   };
@@ -305,11 +350,10 @@ const VideoCall: React.FC<VideoCallProps> = ({ onEndCall }) => {
                   <div className="absolute bottom-16 sm:bottom-4 left-4 flex space-x-2 sm:space-x-3">
                     <button
                       onClick={toggleMute}
-                      className={`p-2 sm:p-3 rounded-full backdrop-blur-md border border-white/20 transition-all duration-300 hover:scale-105 ${
-                        isMuted
-                          ? 'bg-red-500/20 border-red-500/50 text-red-400'
-                          : 'bg-white/10 text-white hover:bg-white/20'
-                      }`}
+                      className={`p-2 sm:p-3 rounded-full backdrop-blur-md border border-white/20 transition-all duration-300 hover:scale-105 ${isMuted
+                        ? 'bg-red-500/20 border-red-500/50 text-red-400'
+                        : 'bg-white/10 text-white hover:bg-white/20'
+                        }`}
                       aria-label="Toggle Mute"
                     >
                       <MicrophoneIcon className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -317,11 +361,10 @@ const VideoCall: React.FC<VideoCallProps> = ({ onEndCall }) => {
 
                     <button
                       onClick={toggleVideo}
-                      className={`p-2 sm:p-3 rounded-full backdrop-blur-md border border-white/20 transition-all duration-300 hover:scale-105 ${
-                        !isVideoOn
-                          ? 'bg-red-500/20 border-red-500/50 text-red-400'
-                          : 'bg-white/10 text-white hover:bg-white/20'
-                      }`}
+                      className={`p-2 sm:p-3 rounded-full backdrop-blur-md border border-white/20 transition-all duration-300 hover:scale-105 ${!isVideoOn
+                        ? 'bg-red-500/20 border-red-500/50 text-red-400'
+                        : 'bg-white/10 text-white hover:bg-white/20'
+                        }`}
                       aria-label="Toggle Video"
                     >
                       {isVideoOn ? (
@@ -399,16 +442,14 @@ const VideoCall: React.FC<VideoCallProps> = ({ onEndCall }) => {
                     {messages.map((msg, index) => (
                       <div
                         key={index}
-                        className={`max-w-xs break-words ${
-                          msg.sender === currentUser ? 'ml-auto' : 'mr-auto'
-                        }`}
+                        className={`max-w-xs break-words ${msg.sender === currentUser ? 'ml-auto' : 'mr-auto'
+                          }`}
                       >
                         <div
-                          className={`p-2 sm:p-3 rounded-2xl ${
-                            msg.sender === currentUser
-                              ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white'
-                              : 'bg-white/10 text-gray-300 backdrop-blur-md'
-                          }`}
+                          className={`p-2 sm:p-3 rounded-2xl ${msg.sender === currentUser
+                            ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white'
+                            : 'bg-white/10 text-gray-300 backdrop-blur-md'
+                            }`}
                         >
                           {msg.text && <p className="text-xs sm:text-sm">{msg.text}</p>}
                           {msg.image && (

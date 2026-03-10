@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { MenuIcon, UsersIcon } from '@heroicons/react/outline';
 import { usePathname, useRouter } from 'next/navigation';
 import axios from "axios";
+import { BASE_URL } from '@/config/baseUrl';
 
 const Header: React.FC = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -24,7 +25,7 @@ const Header: React.FC = () => {
   useEffect(() => {
     const fetchActiveUsers = async () => {
       try {
-        const response = await axios.get('https://wavetalks-server.onrender.com/activeusers');
+        const response = await axios.get(`${BASE_URL}/activeusers`);
         setActiveUsers(response.data.activeUsers);
         // setActiveUsers(42); // Mock data for demo
       } catch (error) {
@@ -48,7 +49,7 @@ const Header: React.FC = () => {
               <span className="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">Talks</span>
             </h1>
           </div>
-          
+
           {/* Status indicator */}
           <div className="flex items-center space-x-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20">
             <div className="h-3 w-3 bg-green-500 rounded-full animate-pulse shadow-lg shadow-green-500/50"></div>
@@ -62,7 +63,7 @@ const Header: React.FC = () => {
 
         {/* Mobile menu button */}
         <div className="lg:hidden ml-4">
-          <button 
+          <button
             onClick={() => setShowMenu(!showMenu)}
             className="p-2 rounded-lg hover:bg-white/10 transition-colors duration-200"
           >
@@ -74,8 +75,8 @@ const Header: React.FC = () => {
       {/* Navigation */}
       <nav className={`lg:flex lg:items-center ${showMenu ? 'block' : 'hidden'} w-full lg:w-auto mt-4 lg:mt-0`}>
         <div className="flex flex-col lg:flex-row lg:space-x-1 space-y-2 lg:space-y-0">
-          <a 
-            href="#Call" 
+          <a
+            href="#Call"
             className="group relative px-4 py-2 rounded-lg text-center hover:bg-white/10 transition-all duration-300 transform hover:scale-105"
             onClick={(e: any) => {
               if (currentPage === "/about") {
@@ -91,11 +92,11 @@ const Header: React.FC = () => {
             </span>
             <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-pink-600/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           </a>
-          
-          <a 
-            href="/about" 
-            target="_blank" 
-            rel="noopener noreferrer" 
+
+          <a
+            href="/about"
+            target="_blank"
+            rel="noopener noreferrer"
             className="group relative px-4 py-2 rounded-lg text-center hover:bg-white/10 transition-all duration-300 transform hover:scale-105"
           >
             <span className="relative z-10 flex items-center justify-center lg:justify-start space-x-2">
@@ -106,9 +107,9 @@ const Header: React.FC = () => {
             </span>
             <div className="absolute inset-0 bg-gradient-to-r from-cyan-600/20 to-blue-600/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           </a>
-          
-          <a 
-            href="#footer" 
+
+          <a
+            href="#footer"
             className="group relative px-4 py-2 rounded-lg text-center hover:bg-white/10 transition-all duration-300 transform hover:scale-105"
           >
             <span className="relative z-10 flex items-center justify-center lg:justify-start space-x-2">
